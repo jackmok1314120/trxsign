@@ -34,30 +34,29 @@ func (bs *BaseService) addressOrPublicKeyToPrivate(publicKey string) (string, er
 	return bs.GetKeyByAddress(publicKey)
 }
 
-func (bs *BaseService) createAddress(req *model.ReqCreateAddressParams, generateKey generateKeyAndAddress) (*model.RespCreateAddressParams, error) {
+func (bs *BaseService) createAddress(req *model.ReqCreateAddressParamsV2, generateKey generateKeyAndAddress) (*model.RespCreateAddressParams, error) {
 
 	var addrInfos []util.AddrInfo
-	for i := 0; i < req.Num; i++ {
+	for i := 0; i < req.Count; i++ {
 		addrInfo, err := generateKey()
 		if err != nil {
 			return nil, err
 		}
 		addrInfos = append(addrInfos, addrInfo)
 	}
-	addresses, err := util.CreateAddrCsv(conf.Config.FilePath, req.MchId, req.OrderId, req.CoinName, addrInfos)
+	addresses, err := util.CreateAddrCsv(conf.Config.FilePath, req.Mch, req.BatchNo, req.CoinCode, addrInfos)
 	if err != nil {
 		return nil, err
 	}
 	resp := new(model.RespCreateAddressParams)
 	resp.Address = addresses
-	resp.Num = req.Num
-	resp.OrderId = req.OrderId
-	resp.MchId = req.MchId
-	resp.CoinName = req.CoinName
+	resp.CoinCode = req.CoinCode
+	resp.Mch = req.Mch
+	resp.BatchNo = req.BatchNo
 	return resp, nil
 }
 
-func (bs *BaseService) multiThreadCreateAddress(number int, coinName, mchId, orderId string, generateKey generateKeyAndAddress) (*model.RespCreateAddressParams, error) {
+func (bs *BaseService) multiThreadCreateAddress(number int, CoinCode, mch, batchNo string, generateKey generateKeyAndAddress) (*model.RespCreateAddressParams, error) {
 	numcpu := runtime.NumCPU()
 	buildnummap := []int{}
 	addressChan := make(chan util.AddrInfo, number)
@@ -112,16 +111,15 @@ func (bs *BaseService) multiThreadCreateAddress(number int, coinName, mchId, ord
 		return nil, errors.New("don`t have any address info")
 	}
 	log.Printf("Start write address to file,Create address number=[%d],Need address=[%d]", len(addrInfos), number)
-	addresses, err := util.CreateAddrCsv(conf.Config.FilePath, mchId, orderId, conf.Config.CoinType, addrInfos)
+	addresses, err := util.CreateAddrCsv(conf.Config.FilePath, mch, batchNo, conf.Config.CoinType, addrInfos)
 	if err != nil {
 		return nil, err
 	}
 	resp := new(model.RespCreateAddressParams)
 	resp.Address = addresses
-	resp.Num = number
-	resp.OrderId = orderId
-	resp.MchId = mchId
-	resp.CoinName = coinName
+	resp.CoinCode = CoinCode
+	resp.Mch = mch
+	resp.BatchNo = batchNo
 	return resp, nil
 }
 

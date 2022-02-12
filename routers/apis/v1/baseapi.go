@@ -98,7 +98,7 @@ func (ba *BaseApi) CreateAddress(c *gin.Context) {
 	c.Header("Access-Control-Allow-Headers", "Content-Type")
 	c.Header("content-type", "application/json")
 	var (
-		req  model.ReqCreateAddressParams
+		req  model.ReqCreateAddressParamsV2
 		resp *model.RespCreateAddressParams
 		err  error
 	)
@@ -109,22 +109,17 @@ func (ba *BaseApi) CreateAddress(c *gin.Context) {
 		return
 	}
 
-	if req.Num > 50000 || req.Num <= 0 {
-		respFailDataReturn(c, fmt.Sprintf("Create address nums is less than zero or more than 50000,Num=%d", req.Num))
+	if req.Count > 50000 {
+		respFailDataReturn(c, fmt.Sprintf("Create address nums must be less than 50000,Num=%d", req.Count))
 		return
 	}
 
-	if req.OrderId == "" {
-		respFailDataReturn(c, "Order id is null")
-		return
-	}
-
-	if req.MchId == "" {
+	if req.Mch == "" {
 		respFailDataReturn(c, "Mch id is null")
 		return
 	}
 
-	if strings.ToLower(req.CoinName) != strings.ToLower(conf.Config.CoinType) {
+	if strings.ToLower(req.CoinCode) != strings.ToLower(conf.Config.CoinType) {
 		respFailDataReturn(c, fmt.Sprintf("Coin name is not %s", strings.ToLower(conf.Config.CoinType)))
 		return
 	}

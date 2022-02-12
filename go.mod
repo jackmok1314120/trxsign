@@ -14,6 +14,7 @@ require (
 	github.com/go-redis/redis/v8 v8.11.4
 	github.com/kr/text v0.2.0 // indirect
 	github.com/mendsley/gojwk v0.0.0-20141217222730-4d5ec6e58103
+	github.com/satori/go.uuid v1.2.0
 	github.com/shopspring/decimal v1.2.0
 	github.com/sirupsen/logrus v1.5.0
 	go.uber.org/zap v1.19.0 // indirect

@@ -15,7 +15,7 @@ import (
 
 type IService interface {
 	SignService(req *model.ReqSignParams) (interface{}, error)
-	CreateAddressService(req *model.ReqCreateAddressParams) (*model.RespCreateAddressParams, error)
+	CreateAddressService(req *model.ReqCreateAddressParamsV2) (*model.RespCreateAddressParams, error)
 	TransferService(req interface{}) (interface{}, error)
 	MultiThreadCreateAddrService(nums int, coinName, mchId, orderId string) error
 	GetBalance(req *model.ReqGetBalanceParams) (interface{}, error)

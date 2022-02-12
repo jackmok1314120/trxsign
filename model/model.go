@@ -21,9 +21,18 @@ type ReqCreateAddressParams struct {
 	ReqBaseParams
 }
 
+type ReqCreateAddressParamsV2 struct {
+	Mch      string `json:"mch,omitempty"`
+	CoinCode string `json:"coinCode,omitempty"`
+	Count    int    `json:"count,omitempty"`
+	BatchNo  string `json:"batchNo,omitempty"`
+}
+
 type RespCreateAddressParams struct {
-	ReqCreateAddressParams
-	Address []string `json:"address"`
+	Mch      string   `json:"mch,omitempty"`
+	CoinCode string   `json:"coinCode,omitempty"`
+	BatchNo  string   `json:"batchNo,omitempty"`
+	Address  []string `json:"address"`
 }
 
 //==========================================================//

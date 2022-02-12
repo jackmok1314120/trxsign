@@ -120,9 +120,16 @@ func (cs *TrxService) getClient() *grpcs.Client {
 接口创建地址服务
 	无需改动
 */
-func (cs *TrxService) CreateAddressService(req *model.ReqCreateAddressParams) (*model.RespCreateAddressParams, error) {
+func (cs *TrxService) CreateAddressService(req *model.ReqCreateAddressParamsV2) (*model.RespCreateAddressParams, error) {
+	if req.Count == 0 {
+		req.Count = 1000
+	}
+	if req.BatchNo == "" {
+		req.BatchNo = util.GetTimeNowStr()
+	}
+
 	if conf.Config.IsStartThread {
-		return cs.BaseService.multiThreadCreateAddress(req.Num, req.CoinName, req.MchId, req.OrderId, cs.createAddressInfo)
+		return cs.BaseService.multiThreadCreateAddress(req.Count, req.CoinCode, req.Mch, req.BatchNo, cs.createAddressInfo)
 	}
 	return cs.BaseService.createAddress(req, cs.createAddressInfo)
 }

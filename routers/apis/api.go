@@ -4,7 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/group-coldwallet/trxsign/conf"
 	v1 "github.com/group-coldwallet/trxsign/routers/apis/v1"
-	v2 "github.com/group-coldwallet/trxsign/routers/apis/v2"
 )
 
 type Apis interface {
@@ -25,8 +24,6 @@ func CreateApis() Apis {
 		} else {
 			apis = v1.NewBaseApi()
 		}
-	case "v2":
-		apis = v2.NewBaseApi()
 	default:
 		//默认使用v1版本
 		apis = v1.NewBaseApi()

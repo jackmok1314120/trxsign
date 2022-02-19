@@ -132,6 +132,14 @@ func (cs *TrxService) CreateAddressService(req *model.ReqCreateAddressParamsV2) 
 		return cs.BaseService.multiThreadCreateAddress(req.Count, req.CoinCode, req.Mch, req.BatchNo, cs.createAddressInfo)
 	}
 	return cs.BaseService.createAddress(req, cs.createAddressInfo)
+
+	result, err := cs.BaseService.createAddress(req, cs.createAddressInfo)
+	if err == nil {
+		log.Infof("CreateAddressService 完成，共生成 %d 个地址，准备重新加载地址", len(result.Address))
+		cs.InitKeyMap()
+		log.Info("重新加载地址完成")
+	}
+	return result, err
 }
 
 /*

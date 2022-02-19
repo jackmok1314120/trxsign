@@ -31,11 +31,11 @@ func New() *Service {
 	s := new(Service)
 	s.aesKeyMap = make(map[string]string)
 	s.encryptKeyMap = make(map[string]string)
-	s.initKeyMap()
+	s.InitKeyMap()
 	return s
 }
 
-func (s *Service) initKeyMap() {
+func (s *Service) InitKeyMap() {
 	paths := s.loadKeyFilePath()
 	if paths == nil || len(paths) == 0 {
 		//log.Error("Load private key error,maybe is can find .csv,please check you path")

@@ -128,12 +128,15 @@ func (cs *TrxService) CreateAddressService(req *model.ReqCreateAddressParamsV2) 
 		req.BatchNo = util.GetTimeNowStr()
 	}
 
+	var (
+		result *model.RespCreateAddressParams
+		err    error
+	)
 	if conf.Config.IsStartThread {
-		return cs.BaseService.multiThreadCreateAddress(req.Count, req.CoinCode, req.Mch, req.BatchNo, cs.createAddressInfo)
+		result, err = cs.BaseService.multiThreadCreateAddress(req.Count, req.CoinCode, req.Mch, req.BatchNo, cs.createAddressInfo)
+	} else {
+		result, err = cs.BaseService.createAddress(req, cs.createAddressInfo)
 	}
-	return cs.BaseService.createAddress(req, cs.createAddressInfo)
-
-	result, err := cs.BaseService.createAddress(req, cs.createAddressInfo)
 	if err == nil {
 		log.Infof("CreateAddressService 完成，共生成 %d 个地址，准备重新加载地址", len(result.Address))
 		cs.InitKeyMap()

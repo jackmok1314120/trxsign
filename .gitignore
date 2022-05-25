@@ -2,3 +2,4 @@ file
 trxsign
 ./idea
 sign-trx
+.idea/*

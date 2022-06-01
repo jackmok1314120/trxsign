@@ -22,17 +22,25 @@ type ReqCreateAddressParams struct {
 }
 
 type ReqCreateAddressParamsV2 struct {
-	Mch      string `json:"mch,omitempty"`
+	// 商户名称,如：hoo
+	Mch string `json:"mch,omitempty"`
+	// 币种，如：trx
 	CoinCode string `json:"coinCode,omitempty"`
-	Count    int    `json:"count,omitempty"`
-	BatchNo  string `json:"batchNo,omitempty"`
+	// 生成地址数量
+	Count int `json:"count,omitempty"`
+	// 本次生成地址对应的编号，如：trx_usb_20220601001
+	BatchNo string `json:"batchNo,omitempty"`
 }
 
 type RespCreateAddressParams struct {
-	Mch      string   `json:"mch,omitempty"`
-	CoinCode string   `json:"coinCode,omitempty"`
-	BatchNo  string   `json:"batchNo,omitempty"`
-	Address  []string `json:"address"`
+	// 商户名称,如：hoo（直接使用入参的值）
+	Mch string `json:"mch,omitempty"`
+	// 币种，如：trx（直接使用入参的值）
+	CoinCode string `json:"coinCode,omitempty"`
+	// 本次生成地址对应的编号，如：trx_usb_20220601001（直接使用入参的值）
+	BatchNo string `json:"batchNo,omitempty"`
+	// 本次生成的地址列表
+	Address []string `json:"address"`
 }
 
 //==========================================================//

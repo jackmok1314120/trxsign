@@ -1,30 +1,26 @@
 coinType = "trx"
 version = "v1"
-port = "8585"
+port = ""
 debug = true
 walletType = "hot"
 filePath = "./file"
 isStartThread = true
 mchId = "xtz"
 orderId = "202102041847"
-nodeUrl = "grpc.trongrid.io:50051"
+nodeUrl = ""
 
 
 [auth]
 encrypt = false
 enable = false
-user = "Y6ze"
-password = "Y6ze"
+user = ""
+password = ""
 
 
 [trx]
-nodeUrl = "http://3.225.171.164:50051"
+nodeUrl = ""
 backUrls = [
-    "52.53.189.99:50051",
-    "18.196.99.16:50051",
-    "34.253.187.192:50051",
-    "18.133.82.227:50051",
-    "35.180.51.164:50051"
+""
 ]
 user = ""
 password = ""
